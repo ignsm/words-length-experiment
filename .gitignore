@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Other
+bs_scrapper/shops.csv
+bs_scrapper/failed.csv
+bs_scrapper/result.csv
+*.pyc
+*.log
+*.csv
+*.elixir_ls
+*.env
+.env
+grabrfi-referral/waitlist.html
+grabrfi-referral/waitlist-es.html
+grabrfi-referral/waitlist-en.html
+data.js

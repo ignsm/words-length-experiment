@@ -1,0 +1,68 @@
+{
+  "name": "words-length-experiment",
+  "version": "1.0.0",
+  "description": "Replication of Beaman, Neath, & Suprenant",
+  "main": "index.js",
+  "repository": "https://github.com/ignsm/words-length-experiment.git",
+  "author": "Ignat <mail@ignat.co.uk>",
+  "license": "MIT",
+  "scripts": {
+    "dev-frontend": "vue-cli-service serve",
+    "dev-server": "nodemon server/index.js",
+    "build": "yarn install && vue-cli-service build",
+    "start": "node server/server.js",
+    "lint": "vue-cli-service lint",
+    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
+  },
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "core-js": "^3.8.3",
+    "cors": "^2.8.5",
+    "csv": "^6.2.1",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-rate-limit": "^6.5.1",
+    "express-slow-down": "^1.4.0",
+    "helmet": "^5.1.1",
+    "mjml": "^4.13.0",
+    "mongodb": "4.8.1",
+    "path": "^0.12.7",
+    "vue": "^3.2.13",
+    "vue-gtag": "^2.0.1",
+    "vue-i18n": "^9.1.0",
+    "vue-router": "4",
+    "vue-select": "^4.0.0-beta.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@intlify/vue-i18n-loader": "^3.0.0",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "nodemon": "^2.0.19",
+    "vue-cli-plugin-i18n": "~2.3.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}
