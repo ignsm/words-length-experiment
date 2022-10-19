@@ -14,39 +14,50 @@ function showWord(context, word) {
 
 function startNewRound(words) {
   let that = this;
+  // Shuffle words for this round
   this.currentRoundWords = shuffle(words);
+
+  // Create experiment data for this round
   this.experimentData[`round${this.roundsPassed + 1}`] = {
     words: this.currentRoundWords,
     answers: [],
     time: [],
   };
+
+  // Show words
   for (let i = 0; i < words.length; i++) {
     setTimeout(showWord, 1000 * i, that, words[i]);
   }
+
+  // Show test when all words are shown
   setTimeout(() => { showWord(that, ''); this.testIsActive = true; this.currentTestStartTime = new Date().getTime(); }, 6000);
+
+  // Round counter when the round is over
   if (this.roundsPassed < this.maxRounds) this.roundsPassed++;
 }
 
-// function calculateDecisionTime() {
-//   let time = new Date().getTime();
-//   let decisionTime = time - this.startTime;
-//   this.experimentData[`round${this.roundsPassed}`].time.push(decisionTime);
-// }
-
 function addRoundResult(word) {
+  // if the word is already in the array, don't add it again
   if (this.currentTestResult.includes(word)) return;
+
+  // calculate decision time and restart timer
   let time = new Date().getTime();
   let decisionTime = (time - this.currentTestStartTime) / 1000;
 
+  // add data for the current step
   this.currentTestResult.push(word);
   this.currentTestTime.push(decisionTime);
 
+  // reset timer
   this.currentTestStartTime = time;
 
+  // if all words are answered
   if (this.currentTestResult.length == this.currentRoundWords.length) {
     this.testIsActive = !this.testIsActive;
+    // save current test results
     this.experimentData[`round${this.roundsPassed}`].answers = this.currentTestResult.slice();
     this.experimentData[`round${this.roundsPassed}`].time = this.currentTestTime.slice();
+    // reset current test results for the next round
     this.currentTestResult = [];
     this.currentTestTime = [];
     // TODO: save data
