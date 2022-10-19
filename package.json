@@ -1,18 +1,13 @@
 {
-  "name": "words-length-experiment",
-  "version": "1.0.0",
-  "description": "Replication of Beaman, Neath, & Suprenant",
-  "main": "index.js",
-  "repository": "https://github.com/ignsm/words-length-experiment.git",
-  "author": "Ignat <mail@ignat.co.uk>",
-  "license": "MIT",
+  "name": "experiment",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "dev-frontend": "vue-cli-service serve",
+    "serve": "vue-cli-service serve",
     "dev-server": "nodemon server/index.js",
     "build": "yarn install && vue-cli-service build",
-    "start": "node server/server.js",
-    "lint": "vue-cli-service lint",
-    "i18n:report": "vue-cli-service i18n:report --src \"./src/**/*.?(js|vue)\" --locales \"./src/locales/**/*.json\""
+    "start": "node server/app.js",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "body-parser": "^1.20.0",
@@ -27,23 +22,17 @@
     "mjml": "^4.13.0",
     "mongodb": "4.8.1",
     "path": "^0.12.7",
-    "vue": "^3.2.13",
-    "vue-gtag": "^2.0.1",
-    "vue-i18n": "^9.1.0",
-    "vue-router": "4",
-    "vue-select": "^4.0.0-beta.4"
+    "vue": "^3.2.13"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
-    "@intlify/vue-i18n-loader": "^3.0.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "nodemon": "^2.0.19",
-    "vue-cli-plugin-i18n": "~2.3.1"
+    "nodemon": "^2.0.19"
   },
   "eslintConfig": {
     "root": true,

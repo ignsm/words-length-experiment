@@ -50,7 +50,7 @@ export default {
     }
   },
   created() {
-    const getWords = 'http://localhost:3000';
+    const getWords = '/generateExperiment';
     fetch(getWords)
       .then(response => response.json())
       .then(response => {
