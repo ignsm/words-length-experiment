@@ -18,7 +18,7 @@ function shuffleArray(arr) {
 
 function createExperiment() {
   const words = [];
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 15; i++) { // TODO: set from query
     words.push(getRandomSubset(short_words, 6));
     words.push(getRandomSubset(long_words, 6));
   }
