@@ -12,24 +12,43 @@ function showWord(context, word) {
   context.wordToShow = word;
 }
 
-function showWords(words) {
+function startNewRound(words) {
   let that = this;
   this.currentRoundWords = shuffle(words);
+  this.experimentData[`round${this.roundsPassed + 1}`] = {
+    words: this.currentRoundWords,
+    answers: [],
+    time: [],
+  };
   for (let i = 0; i < words.length; i++) {
     setTimeout(showWord, 1000 * i, that, words[i]);
   }
-  setTimeout(() => { showWord(that, ''); this.testIsActive = true }, 6000);
+  setTimeout(() => { showWord(that, ''); this.testIsActive = true; this.currentTestStartTime = new Date().getTime(); }, 6000);
   if (this.roundsPassed < this.maxRounds) this.roundsPassed++;
 }
 
+// function calculateDecisionTime() {
+//   let time = new Date().getTime();
+//   let decisionTime = time - this.startTime;
+//   this.experimentData[`round${this.roundsPassed}`].time.push(decisionTime);
+// }
+
 function addRoundResult(word) {
   if (this.currentTestResult.includes(word)) return;
+  let time = new Date().getTime();
+  let decisionTime = (time - this.currentTestStartTime) / 1000;
+
   this.currentTestResult.push(word);
+  this.currentTestTime.push(decisionTime);
+
+  this.currentTestStartTime = time;
+
   if (this.currentTestResult.length == this.currentRoundWords.length) {
-    console.log('round finished');
     this.testIsActive = !this.testIsActive;
-    this.experimentData.push(this.currentTestResult);
+    this.experimentData[`round${this.roundsPassed}`].answers = this.currentTestResult.slice();
+    this.experimentData[`round${this.roundsPassed}`].time = this.currentTestTime.slice();
     this.currentTestResult = [];
+    this.currentTestTime = [];
     // TODO: save data
     return;
   }
@@ -40,17 +59,19 @@ export default {
   data() {
     return {
       words: [],
-      currentRoundWords: [],
-      wordToShow: '',
       maxRounds: 1,
       roundsPassed: 0,
+      currentRoundWords: [],
+      wordToShow: '',
       testIsActive: false,
+      currentTestStartTime: 0,
       currentTestResult: [],
-      experimentData: [],
+      currentTestTime: [],
+      experimentData: {},
     }
   },
   created() {
-    const getWords = '/generateExperiment';
+    const getWords = 'https://upf-experiment.ignat.co.uk/generateExperiment';
     fetch(getWords)
       .then(response => response.json())
       .then(response => {
@@ -59,7 +80,7 @@ export default {
       })
   },
   methods: {
-    showWords,
+    startNewRound,
     addRoundResult,
   },
 }
@@ -82,7 +103,7 @@ export default {
           Round {{roundsPassed + 1}} from {{maxRounds}}!<br />Ready?
         </p>
       </div>
-      <button @click="showWords(words[roundsPassed])">Start</button>
+      <button @click="startNewRound(words[roundsPassed])">Start</button>
     </div>
 
     <div class="test" id="test" v-if="testIsActive">
@@ -90,7 +111,8 @@ export default {
       <div class="test__item" v-for="word in currentRoundWords" :key="word" @click="addRoundResult(word)">
         <p class="word">{{word.toUpperCase()}}</p>
         <p class="selected-number">
-          {{ currentTestResult.find((item, index) => item == word) ? currentTestResult.findIndex((item, index) => item == word) + 1 :
+          {{ currentTestResult.find((item, index) => item == word) ? currentTestResult.findIndex((item, index) => item
+          == word) + 1 :
           '' }}
         </p>
       </div>
