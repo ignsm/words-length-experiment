@@ -187,8 +187,11 @@ button {
 }
 
 .test {
+  padding: 0 10px;
   width: 600px;
+  max-width: 100%;
   text-align: left;
+  box-sizing: border-box;
 }
 
 .test__item {
