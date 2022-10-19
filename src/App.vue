@@ -60,9 +60,28 @@ function addRoundResult(word) {
     // reset current test results for the next round
     this.currentTestResult = [];
     this.currentTestTime = [];
-    // TODO: save data
     return;
   }
+}
+
+function saveData(){
+  const api = '/save';
+  const data = this.experimentData;
+  fetch(api, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  this.isExperimentFinished = true;
 }
 
 export default {
@@ -79,10 +98,11 @@ export default {
       currentTestResult: [],
       currentTestTime: [],
       experimentData: {},
+      isExperimentFinished: false,
     }
   },
   created() {
-    const getWords = 'https://upf-experiment.ignat.co.uk/generateExperiment';
+    const getWords = '/generateExperiment';
     fetch(getWords)
       .then(response => response.json())
       .then(response => {
@@ -93,6 +113,7 @@ export default {
   methods: {
     startNewRound,
     addRoundResult,
+    saveData,
   },
 }
 </script>
@@ -129,8 +150,10 @@ export default {
       </div>
     </div>
 
-    <div v-if="wordToShow == '' && roundsPassed == maxRounds">
-      Thank you for participating! I didn't save any data yet, but I will in the future.
+    <div v-if="wordToShow == '' && roundsPassed == maxRounds && !testIsActive">
+      <p class="experiment-description" v-if="!isExperimentFinished">Thank you for participating! I didn't save any data yet, but I will in the future. Click the button below to save your answers.</p>
+      <button @click="saveData" v-if="!isExperimentFinished">Finish experiment</button>
+      <p class="experiment-description" v-if="isExperimentFinished">You can now close this window</p>
     </div>
   </div>
 </template>
