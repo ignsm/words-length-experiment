@@ -14,15 +14,16 @@ function showWord(context, word) {
 
 function startNewRound(words) {
   let that = this;
-  // Shuffle words for this round
-  this.currentRoundWords = shuffle(words);
 
   // Create experiment data for this round
   this.experimentData[`round${this.roundsPassed + 1}`] = {
-    words: this.currentRoundWords,
+    words: this.words[this.roundsPassed],
     answers: [],
     time: [],
   };
+
+  // Shuffle words for this round
+  this.currentRoundWords = shuffle(words);
 
   // Show words
   for (let i = 0; i < words.length; i++) {
@@ -64,7 +65,7 @@ function addRoundResult(word) {
   }
 }
 
-function saveData(){
+function saveData() {
   const api = 'https://upf-experiment.ignat.co.uk/save';
   const data = this.experimentData;
   fetch(api, {
@@ -84,14 +85,14 @@ function saveData(){
   this.isExperimentFinished = true;
 }
 
-function generateApiUrl(){
+function generateApiUrl() {
   const baseApi = 'https://upf-experiment.ignat.co.uk/generateExperiment';
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
   const wordsPerRound = params.wordsPerRound || 6;
   const rounds = params.rounds || 30;
   if (wordsPerRound != 6) this.wordsPerRound = wordsPerRound;
-  
+
   const resultApi = `${baseApi}?wordsPerRound=${wordsPerRound}&rounds=${rounds}`;
   return resultApi;
 }
@@ -165,7 +166,8 @@ export default {
     </div>
 
     <div v-if="wordToShow == '' && roundsPassed == maxRounds && !testIsActive">
-      <p class="experiment-description" v-if="!isExperimentFinished">Thank you for participating! I didn't save any data yet, but I will in the future. Click the button below to save your answers.</p>
+      <p class="experiment-description" v-if="!isExperimentFinished">Thank you for participating! I didn't save any data
+        yet, but I will in the future. Click the button below to save your answers.</p>
       <button @click="saveData" v-if="!isExperimentFinished">Finish experiment</button>
       <p class="experiment-description" v-if="isExperimentFinished">You can now close this window</p>
     </div>

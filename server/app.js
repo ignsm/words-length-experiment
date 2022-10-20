@@ -39,6 +39,7 @@ app.post('/save', (req, res) => {
   const records = req.body;
   const experimentName = new Date().toISOString();
   writeFile(experimentName, parseExpResults(records));
+  res.send({ status: 'ok' });
 });
 
 const server = http.createServer(app);
