@@ -30,7 +30,7 @@ function startNewRound(words) {
   }
 
   // Show test when all words are shown
-  setTimeout(() => { showWord(that, ''); this.testIsActive = true; this.currentTestStartTime = new Date().getTime(); }, 6000);
+  setTimeout(() => { showWord(that, ''); this.testIsActive = true; this.currentTestStartTime = new Date().getTime(); }, 1000 * this.wordsPerRound);
 
   // Round counter when the round is over
   if (this.roundsPassed < this.maxRounds) this.roundsPassed++;
@@ -65,7 +65,7 @@ function addRoundResult(word) {
 }
 
 function saveData(){
-  const api = '/save';
+  const api = 'https://upf-experiment.ignat.co.uk/save';
   const data = this.experimentData;
   fetch(api, {
     method: 'POST',
@@ -85,11 +85,13 @@ function saveData(){
 }
 
 function generateApiUrl(){
-  const baseApi = '/generateExperiment';
+  const baseApi = 'https://upf-experiment.ignat.co.uk/generateExperiment';
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
   const wordsPerRound = params.wordsPerRound || 6;
   const rounds = params.rounds || 30;
+  if (wordsPerRound != 6) this.wordsPerRound = wordsPerRound;
+  
   const resultApi = `${baseApi}?wordsPerRound=${wordsPerRound}&rounds=${rounds}`;
   return resultApi;
 }
@@ -100,6 +102,7 @@ export default {
     return {
       words: [],
       maxRounds: 1,
+      wordsPerRound: 6,
       roundsPassed: 0,
       currentRoundWords: [],
       wordToShow: '',
@@ -112,7 +115,7 @@ export default {
     }
   },
   created() {
-    const getWords = generateApiUrl();
+    const getWords = this.generateApiUrl();
     fetch(getWords)
       .then(response => response.json())
       .then(response => {
@@ -121,6 +124,7 @@ export default {
       })
   },
   methods: {
+    generateApiUrl,
     startNewRound,
     addRoundResult,
     saveData,
