@@ -30,7 +30,7 @@ function startNewRound(words) {
   }
 
   // Show test when all words are shown
-  setTimeout(() => { showWord(that, ''); this.testIsActive = true; this.currentTestStartTime = new Date().getTime(); }, this.wordsPerRound * 1000);
+  setTimeout(() => { showWord(that, ''); this.testIsActive = true; this.currentTestStartTime = new Date().getTime(); }, 6000);
 
   // Round counter when the round is over
   if (this.roundsPassed < this.maxRounds) this.roundsPassed++;
@@ -64,7 +64,7 @@ function addRoundResult(word) {
   }
 }
 
-function saveData() {
+function saveData(){
   const api = '/save';
   const data = this.experimentData;
   fetch(api, {
@@ -84,14 +84,13 @@ function saveData() {
   this.isExperimentFinished = true;
 }
 
-function generateApiUrl() {
+function generateApiUrl(){
   const baseApi = '/generateExperiment';
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
   const wordsPerRound = params.wordsPerRound || 6;
   const rounds = params.rounds || 30;
   const resultApi = `${baseApi}?wordsPerRound=${wordsPerRound}&rounds=${rounds}`;
-  this.wordsPerRound = wordsPerRound;
   return resultApi;
 }
 
@@ -101,7 +100,6 @@ export default {
     return {
       words: [],
       maxRounds: 1,
-      wordsPerRound: 6,
       roundsPassed: 0,
       currentRoundWords: [],
       wordToShow: '',
@@ -163,8 +161,7 @@ export default {
     </div>
 
     <div v-if="wordToShow == '' && roundsPassed == maxRounds && !testIsActive">
-      <p class="experiment-description" v-if="!isExperimentFinished">Thank you for participating! I didn't save any data
-        yet, but I will in the future. Click the button below to save your answers.</p>
+      <p class="experiment-description" v-if="!isExperimentFinished">Thank you for participating! I didn't save any data yet, but I will in the future. Click the button below to save your answers.</p>
       <button @click="saveData" v-if="!isExperimentFinished">Finish experiment</button>
       <p class="experiment-description" v-if="isExperimentFinished">You can now close this window</p>
     </div>
