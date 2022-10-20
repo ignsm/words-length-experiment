@@ -1,5 +1,5 @@
-const fs = require('fs');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const sendToTelegram = require('./sendToTelegram');
 
 function writeFile(fileName, data) {
   const csvWriter = createCsvWriter({
@@ -7,6 +7,7 @@ function writeFile(fileName, data) {
     header: Object.keys(data[0]).map(key => ({ id: key, title: key }))
   });
   csvWriter.writeRecords(data)
+    .then(() => sendToTelegram(fileName))
     .then(() => console.log('The CSV file was written successfully'));
 }
 

@@ -22,6 +22,7 @@
     "helmet": "^5.1.1",
     "mjml": "^4.13.0",
     "mongodb": "4.8.1",
+    "node-telegram-bot-api": "^0.59.0",
     "path": "^0.12.7",
     "vue": "^3.2.13"
   },
