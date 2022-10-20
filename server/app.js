@@ -3,10 +3,10 @@ require('dotenv').config();
 const path = require('path');
 const fs = require('fs');
 const express = require('express');
-const createExperiment = require('./controllers/createExperiment');
 const http = require('http');
 const bp = require('body-parser');
 const cors = require('cors');
+const createExperiment = require('./middlewares/createExperiment');
 const parseExpResults = require('./middlewares/parseExpResults');
 const writeFile = require('./middlewares/writeFile');
 
@@ -29,7 +29,9 @@ app.get('/', (req, res) => {
 app.use(express.static(staticPath));
 
 app.get('/generateExperiment', (req, res) => {
-  const data = createExperiment();
+  const rounds = req.query.rounds || 30;
+  const wordsPerRound = req.query.wordsPerRound || 6;
+  const data = createExperiment(rounds, wordsPerRound);
   res.send({ data });
 });
 

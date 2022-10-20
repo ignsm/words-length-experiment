@@ -16,12 +16,19 @@ function shuffleArray(arr) {
   }
 }
 
-function createExperiment() {
+function createExperiment(rounds = 30, wordsInRound = 6) {
   const words = [];
-  for (let i = 0; i < 15; i++) { // TODO: set from query
-    words.push(getRandomSubset(short_words, 6));
-    words.push(getRandomSubset(long_words, 6));
+  const shortWordsSamplesQuantity = Math.floor(rounds / 2);
+  const longWordsSamplesQuantity = rounds - shortWordsSamplesQuantity;
+
+  for (let i = 0; i < shortWordsSamplesQuantity; i++) {
+    words.push(getRandomSubset(short_words, wordsInRound));
   }
+
+  for (let i = 0; i < longWordsSamplesQuantity; i++) {
+    words.push(getRandomSubset(long_words, wordsInRound));
+  }
+
   shuffleArray(words);
   return words;
 }

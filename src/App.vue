@@ -84,6 +84,16 @@ function saveData(){
   this.isExperimentFinished = true;
 }
 
+function generateApiUrl(){
+  const baseApi = '/generateExperiment';
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const params = Object.fromEntries(urlSearchParams.entries());
+  const wordsPerRound = params.wordsPerRound || 6;
+  const rounds = params.rounds || 30;
+  const resultApi = `${baseApi}?wordsPerRound=${wordsPerRound}&rounds=${rounds}`;
+  return resultApi;
+}
+
 export default {
   name: 'App',
   data() {
@@ -102,7 +112,7 @@ export default {
     }
   },
   created() {
-    const getWords = '/generateExperiment';
+    const getWords = generateApiUrl();
     fetch(getWords)
       .then(response => response.json())
       .then(response => {

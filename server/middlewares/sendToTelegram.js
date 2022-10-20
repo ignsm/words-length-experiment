@@ -13,7 +13,12 @@ function readFile(fileName) {
 }
 
 function sendToTelegram(fileName) {
-  bot.sendDocument(chatId, readFile(fileName))
+  const filedata = (new Date()).toLocaleString().replace(/ /g, '_').toLowerCase();
+  const fileOptions = {
+    filename: `experiment_data_${filedata}.csv`,
+    contentType: 'text/csv',
+  }
+  bot.sendDocument(chatId, readFile(fileName), {}, fileOptions)
     .then(() => console.log('The CSV file was sent successfully'));
 }
 
