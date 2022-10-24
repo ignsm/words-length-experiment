@@ -5,8 +5,9 @@ function parseExpResults(data) {
     const words = roundData.words;
     const answers = roundData.answers;
     const time = roundData.time;
+    const userData = roundData.userData;
 
-    const roundProcessed = {};
+    const roundProcessed = {...userData};
     for (let i = 0; i < words.length; i++) {
       roundProcessed[`W${i + 1}`] = words[i];
       roundProcessed[`w${i + 1}`] = answers[i];
