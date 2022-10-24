@@ -71,7 +71,7 @@ function nextStep() {
 }
 
 function saveData() {
-  const api = 'https://upf-experiment.ignat.co.uk/save';
+  const api = '/save';
   const data = this.experimentData;
   fetch(api, {
     method: 'POST',
