@@ -58,6 +58,7 @@ function addRoundResult(word) {
     // save current test results
     this.experimentData[`round${this.roundsPassed}`].answers = this.currentTestResult.slice();
     this.experimentData[`round${this.roundsPassed}`].time = this.currentTestTime.slice();
+    this.experimentData[`round${this.roundsPassed}`].userData = this.userData;
     // reset current test results for the next round
     this.currentTestResult = [];
     this.currentTestTime = [];
@@ -103,7 +104,7 @@ function generateApiUrl() {
 }
 
 function saveFormData() {
-  const data = this.experimentData
+  const data = this.userData;
   function isFieldExist(field) {
     if (Object.prototype.hasOwnProperty.call(data, field)) {
       return true;
@@ -139,11 +140,12 @@ export default {
       currentTestStartTime: 0,
       currentTestResult: [],
       currentTestTime: [],
-      experimentData: {
+      userData: {
         gender: "",
         langLvl: "",
         eduLvl: "",
       },
+      experimentData: {},
       isExperimentFinished: false,
       showForm: true,
       showStepOne: true,
@@ -199,12 +201,12 @@ export default {
       <form>
         <h2>Please, fill this form</h2>
         <input type="text" name="name" id="name" placeholder="Your name" class="form-input"
-          v-model="experimentData.name">
+          v-model="userData.name">
         <input type="email" name="email" id="email" placeholder="Your email" class="form-input"
-          v-model="experimentData.email">
-        <input type="number" name="age" id="age" placeholder="Your age" class="form-input" v-model="experimentData.age">
+          v-model="userData.email">
+        <input type="number" name="age" id="age" placeholder="Your age" class="form-input" v-model="userData.age">
         <select name="gender" id="gender" class="form-select" placeholder="Your gender" required
-          v-model="experimentData.gender">
+          v-model="userData.gender">
           <option value="" disabled selected>Your gender</option>
           <option value="m">Male</option>
           <option value="f">Female</option>
@@ -212,7 +214,7 @@ export default {
           <option value="n">I don't want to share</option>
         </select>
         <select name="languageLevel" id="languageLevel" class="form-select" required
-          placeholder="Select your English language level" v-model="experimentData.langLvl">
+          placeholder="Select your English language level" v-model="userData.langLvl">
           <option value="" disabled selected>Select your English language level</option>
           <option value="a1">A1 (beginner)</option>
           <option value="a2">A2 (elementary)</option>
@@ -223,7 +225,7 @@ export default {
           <option value="fluent">Fluent</option>
         </select>
         <select name="educationLevel" id="educationLevel" class="form-select" placeholder="Select your education level"
-          required v-model="experimentData.eduLvl">
+          required v-model="userData.eduLvl">
           <option value="" disabled selected>Select your education level</option>
           <option value="bachelor">Bachelor</option>
           <option value="master">Master</option>
