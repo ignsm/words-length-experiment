@@ -104,25 +104,25 @@ function generateApiUrl() {
 }
 
 function saveFormData() {
-  const data = this.userData;
-  function isFieldExist(field) {
-    if (Object.prototype.hasOwnProperty.call(data, field)) {
+  function isFieldFilled(data, field) {
+    if (Object.prototype.hasOwnProperty.call(data, field) && data[field] != '') {
       return true;
     }
     return false;
   }
 
   if (
-    !isFieldExist('name')
-    && !isFieldExist('email')
-    && !isFieldExist('age')
-    && !isFieldExist('gender')
-    && !isFieldExist('langLvl')
-    && !isFieldExist('eduLvl')
+    !isFieldFilled(this.userData, 'name')
+    || !isFieldFilled(this.userData, 'email')
+    || !isFieldFilled(this.userData, 'age')
+    || !isFieldFilled(this.userData, 'gender')
+    || !isFieldFilled(this.userData, 'langLvl')
+    || !isFieldFilled(this.userData, 'eduLvl')
   ) {
     alert('Please fill in all fields');
     return;
   }
+
   this.showForm = false;
 }
 
@@ -200,13 +200,10 @@ export default {
     <div class="step2" v-if="showStepTwo">
       <form>
         <h2>First, tell us about yourself:</h2>
-        <input type="text" name="name" id="name" placeholder="Name" class="form-input"
-          v-model="userData.name">
-        <input type="email" name="email" id="email" placeholder="Email" class="form-input"
-          v-model="userData.email">
+        <input type="text" name="name" id="name" placeholder="Name" class="form-input" v-model="userData.name">
+        <input type="email" name="email" id="email" placeholder="Email" class="form-input" v-model="userData.email">
         <input type="number" name="age" id="age" placeholder="Age" class="form-input" v-model="userData.age">
-        <select name="gender" id="gender" class="form-select" placeholder="Gender" required
-          v-model="userData.gender">
+        <select name="gender" id="gender" class="form-select" placeholder="Gender" required v-model="userData.gender">
           <option value="" disabled selected>Gender</option>
           <option value="m">Male</option>
           <option value="f">Female</option>
@@ -224,33 +221,33 @@ export default {
           <option value="c2">C2 (proficient)</option>
           <option value="fluent">Fluent</option>
         </select>
-        <select name="educationLevel" id="educationLevel" class="form-select" placeholder="Education level"
-          required v-model="userData.eduLvl">
+        <select name="educationLevel" id="educationLevel" class="form-select" placeholder="Education level" required
+          v-model="userData.eduLvl">
           <option value="" disabled selected>Select Education level</option>
           <option value="bachelor">Bachelor</option>
           <option value="master">Master</option>
           <option value="phd">PhD</option>
         </select>
         <button class="btn-submit" type="button" @click.prevent="saveFormData()">
-          Submit form and start the experiment
+          Start the experiment
         </button>
       </form>
     </div>
   </div>
 
   <div class="content">
-    <p>{{wordToShow?.toUpperCase()}}</p>
+    <p>{{ wordToShow?.toUpperCase() }}</p>
 
     <div class="btn-wrapper" v-if="wordToShow == '' && roundsPassed < maxRounds && !testIsActive">
       <div v-if="roundsPassed == 0">
         <p class="experiment-description">
           Hello there!<br />You know, I'm something of a scientist myself. So let's do some
-          experiments!<br />{{maxRounds}} rounds left.
+          experiments!<br />{{ maxRounds }} rounds left.
         </p>
       </div>
       <div v-else>
         <p class="experiment-description">
-          Round {{roundsPassed + 1}} from {{maxRounds}}!<br />Ready?
+          Round {{ roundsPassed + 1 }} from {{ maxRounds }}!<br />Ready?
         </p>
       </div>
       <button @click="startNewRound(words[roundsPassed])">Start</button>
@@ -259,11 +256,12 @@ export default {
     <div class="test" id="test" v-if="testIsActive">
       <p class="test-question">Click one by one on the words in the order they were presented:</p>
       <div class="test__item" v-for="word in currentRoundWords" :key="word" @click="addRoundResult(word)">
-        <p class="word">{{word.toUpperCase()}}</p>
+        <p class="word">{{ word.toUpperCase() }}</p>
         <p class="selected-number">
           {{ currentTestResult.find((item, index) => item == word) ? currentTestResult.findIndex((item, index) => item
-          == word) + 1 :
-          '' }}
+              == word) + 1 :
+              ''
+          }}
         </p>
       </div>
     </div>
