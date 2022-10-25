@@ -199,23 +199,23 @@ export default {
 
     <div class="step2" v-if="showStepTwo">
       <form>
-        <h2>Please, fill this form</h2>
-        <input type="text" name="name" id="name" placeholder="Your name" class="form-input"
+        <h2>First, tell us about yourself:</h2>
+        <input type="text" name="name" id="name" placeholder="Name" class="form-input"
           v-model="userData.name">
-        <input type="email" name="email" id="email" placeholder="Your email" class="form-input"
+        <input type="email" name="email" id="email" placeholder="Email" class="form-input"
           v-model="userData.email">
-        <input type="number" name="age" id="age" placeholder="Your age" class="form-input" v-model="userData.age">
-        <select name="gender" id="gender" class="form-select" placeholder="Your gender" required
+        <input type="number" name="age" id="age" placeholder="Age" class="form-input" v-model="userData.age">
+        <select name="gender" id="gender" class="form-select" placeholder="Gender" required
           v-model="userData.gender">
-          <option value="" disabled selected>Your gender</option>
+          <option value="" disabled selected>Gender</option>
           <option value="m">Male</option>
           <option value="f">Female</option>
           <option value="o">Other</option>
           <option value="n">I don't want to share</option>
         </select>
         <select name="languageLevel" id="languageLevel" class="form-select" required
-          placeholder="Select your English language level" v-model="userData.langLvl">
-          <option value="" disabled selected>Select your English language level</option>
+          placeholder="English language level" v-model="userData.langLvl">
+          <option value="" disabled selected>English language level</option>
           <option value="a1">A1 (beginner)</option>
           <option value="a2">A2 (elementary)</option>
           <option value="b1">B1 (intermediate)</option>
@@ -224,9 +224,9 @@ export default {
           <option value="c2">C2 (proficient)</option>
           <option value="fluent">Fluent</option>
         </select>
-        <select name="educationLevel" id="educationLevel" class="form-select" placeholder="Select your education level"
+        <select name="educationLevel" id="educationLevel" class="form-select" placeholder="Education level"
           required v-model="userData.eduLvl">
-          <option value="" disabled selected>Select your education level</option>
+          <option value="" disabled selected>Select Education level</option>
           <option value="bachelor">Bachelor</option>
           <option value="master">Master</option>
           <option value="phd">PhD</option>
