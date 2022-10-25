@@ -266,9 +266,9 @@ export default {
     </div>
 
     <div v-if="wordToShow == '' && roundsPassed == maxRounds && !testIsActive">
-      <p class="experiment-description" v-if="!isExperimentFinished">Thank you for participating! Click the button below to save your answers.</p>
+      <p class="experiment-description text-center" v-if="!isExperimentFinished">Thank you for participating! Click the button below to save your answers.</p>
       <button @click="saveData" v-if="!isExperimentFinished">Finish experiment</button>
-      <p class="experiment-description" v-if="isExperimentFinished">You can now close this window</p>
+      <p class="experiment-description text-center" v-if="isExperimentFinished">You can now close this window</p>
     </div>
   </div>
 </template>
@@ -372,6 +372,10 @@ option {
   font-size: 18px;
   line-height: 140%;
   text-align: left;
+}
+
+.text-center {
+  text-align: center;
 }
 
 button {
