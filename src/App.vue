@@ -241,8 +241,7 @@ export default {
     <div class="btn-wrapper" v-if="wordToShow == '' && roundsPassed < maxRounds && !testIsActive">
       <div v-if="roundsPassed == 0">
         <p class="experiment-description">
-          Hello there!<br />You know, I'm something of a scientist myself. So let's do some
-          experiments!<br />{{ maxRounds }} rounds left.
+          A series of words will appear one by one in the middle of your screen. Afterward, you'll see a page where you have to choose the correct order of the words by clicking on them. Once you click on a word, you can't change your choice. Do not worry if you make a mistake, just keep picking words in the order you think is right. <b>{{ maxRounds }} rounds left.</b>
         </p>
       </div>
       <div v-else>
@@ -267,8 +266,7 @@ export default {
     </div>
 
     <div v-if="wordToShow == '' && roundsPassed == maxRounds && !testIsActive">
-      <p class="experiment-description" v-if="!isExperimentFinished">Thank you for participating! I didn't save any data
-        yet, but I will in the future. Click the button below to save your answers.</p>
+      <p class="experiment-description" v-if="!isExperimentFinished">Thank you for participating! Click the button below to save your answers.</p>
       <button @click="saveData" v-if="!isExperimentFinished">Finish experiment</button>
       <p class="experiment-description" v-if="isExperimentFinished">You can now close this window</p>
     </div>
@@ -368,8 +366,12 @@ option {
 }
 
 .experiment-description {
+  margin: auto;
+  width: 640px;
+  max-width: 100%;
   font-size: 18px;
   line-height: 140%;
+  text-align: left;
 }
 
 button {
