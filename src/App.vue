@@ -112,9 +112,7 @@ function saveFormData() {
   }
 
   if (
-    !isFieldFilled(this.userData, 'name')
-    || !isFieldFilled(this.userData, 'email')
-    || !isFieldFilled(this.userData, 'age')
+    !isFieldFilled(this.userData, 'age')
     || !isFieldFilled(this.userData, 'gender')
     || !isFieldFilled(this.userData, 'langLvl')
     || !isFieldFilled(this.userData, 'eduLvl')
@@ -200,8 +198,6 @@ export default {
     <div class="step2" v-if="showStepTwo">
       <form>
         <h2>First, tell us about yourself:</h2>
-        <input type="text" name="name" id="name" placeholder="Name" class="form-input" v-model="userData.name">
-        <input type="email" name="email" id="email" placeholder="Email" class="form-input" v-model="userData.email">
         <input type="number" name="age" id="age" placeholder="Age" class="form-input" v-model="userData.age">
         <select name="gender" id="gender" class="form-select" placeholder="Gender" required v-model="userData.gender">
           <option value="" disabled selected>Gender</option>
